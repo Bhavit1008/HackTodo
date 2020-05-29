@@ -19,8 +19,11 @@
         android:name="com.example.schedulertodo.ui.AddNoteFragment"
         android:label="Add Notes"
         tools:layout="@layout/fragment_add_note" >
-        <action
-            android:id="@+id/actionSaveNotes"
-            app:destination="@id/homeFragment" />
+        <action android:id="@+id/actionSaveNote" app:destination="@id/homeFragment"/>
+        <argument
+            app:argType="com.example.schedulertodo.db.Note"
+            android:name="Note"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
 </navigation>
