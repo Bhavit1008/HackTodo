@@ -30,6 +30,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                tools:text="Task Date"
+                android:layout_below="@id/text_view_note"
+                android:id="@+id/text_view_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                tools:text="Task Category"
+                android:layout_below="@id/text_view_date"
+                android:id="@+id/text_view_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

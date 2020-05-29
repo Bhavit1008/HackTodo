@@ -23,7 +23,8 @@ class NotesAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NotesAd
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.view.text_view_title.text = notes[position].title
         holder.view.text_view_note.text = notes[position].note
-
+        holder.view.text_view_date.text = notes[position].date
+        holder.view.text_view_cat.text = notes[position].cat
         holder.view.setOnClickListener {
             val action = HomeFragmentDirections.actionAddNotes()
             action.note = notes[position]
