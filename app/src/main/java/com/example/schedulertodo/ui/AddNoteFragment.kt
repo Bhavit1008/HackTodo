@@ -6,18 +6,21 @@ import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 
 import com.example.schedulertodo.R
+import com.example.schedulertodo.client.RetrofitClient
 import com.example.schedulertodo.db.Note
 import com.example.schedulertodo.db.NoteDatabase
+import com.example.schedulertodo.models.TaskResponse
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import kotlinx.coroutines.launch
-import java.nio.file.Files.delete
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 /**
@@ -31,12 +34,18 @@ class AddNoteFragment : BaseFragment() {
     val day = c.get(Calendar.DAY_OF_MONTH)
     private var note: Note? = null
     var category :String = ""
+    var stat :String = ""
     var date :String = ""
+    var token:String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
+        val preference= activity?.getSharedPreferences("todo", Context.MODE_PRIVATE)
+        token= preference?.getString("token","").toString()
+        Toast.makeText(activity,token,Toast.LENGTH_SHORT).show()
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_note, container, false)
@@ -50,9 +59,39 @@ class AddNoteFragment : BaseFragment() {
             note = AddNoteFragmentArgs.fromBundle(it).note
             edit_text_title.setText(note?.title)
             edit_text_note.setText(note?.note)
+            txt_date.setText(note?.date)
         }
 
         val languages = resources.getStringArray(R.array.Languages)
+        val status = resources.getStringArray(R.array.Status)
+
+
+
+        if (spinner_status != null) {
+            val adapter1 = ArrayAdapter(context,
+                android.R.layout.simple_spinner_item, status)
+            spinner_status.adapter = adapter1
+
+            spinner_status.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+
+                    stat = status[position]
+                    Toast.makeText(context,
+                        getString(R.string.selected_item) + " " +
+                                "" + status[position], Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    Toast.makeText(context,"please select status",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
+
 
         if (spinner != null) {
             val adapter = ArrayAdapter(context,
@@ -124,12 +163,17 @@ class AddNoteFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
+            if (stat == "") {
+                Toast.makeText(context,"please enter the date for task",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
 
             launch {
 
                 context?.let {
-                    val mNote = Note(noteTitle, noteBody,date,category)
+                    val mNote = Note(noteTitle, noteBody,date,category,stat)
 
                     if (note == null) {
                         NoteDatabase(it).getNoteDao().addNote(mNote)
@@ -140,6 +184,34 @@ class AddNoteFragment : BaseFragment() {
                         Toast.makeText(context,"Task updated",Toast.LENGTH_SHORT).show()
                     }
 
+                    if(noteTitle !=null && noteTitle !=null && date !=null && stat != null && category !=null){
+                        RetrofitClient.instance.addTask(
+                            noteTitle,
+                            noteBody,
+                            date,
+                            statusOfProcess(stat),
+                            category,
+                            token
+                        ).enqueue(object : Callback<TaskResponse> {
+                            override fun onFailure(call: Call<TaskResponse>, t: Throwable) {
+                                Toast.makeText(activity,t.message.toString(),Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(
+                                call: Call<TaskResponse>,
+                                response: Response<TaskResponse>
+                            ) {
+                                Toast.makeText(activity,response.body().toString(),Toast.LENGTH_SHORT).show()
+                            }
+
+
+                        })
+                    }
+                    else{
+                        Toast.makeText(activity,"NOT ENTERED",Toast.LENGTH_SHORT).show()
+                    }
+
+
 
                     val action = AddNoteFragmentDirections.actionSaveNote()
                     Navigation.findNavController(view).navigate(action)
@@ -148,6 +220,13 @@ class AddNoteFragment : BaseFragment() {
 
         }
 
+    }
+
+    private fun statusOfProcess(stat: String): String {
+        if(stat == "On Going")
+            return "0"
+        else
+            return "1"
     }
 
     private fun deleteNote() {

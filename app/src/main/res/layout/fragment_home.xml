@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HomeFragment"
-    android:layout_margin="16dp">
+    android:background="#FFF"
+    >
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@
         android:tint="@android:color/white"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:clickable="true" android:id="@+id/button_add"/>
+        android:clickable="true" android:id="@+id/button_add"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"/>
 
 </RelativeLayout>

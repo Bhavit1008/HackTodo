@@ -25,6 +25,21 @@ class NotesAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NotesAd
         holder.view.text_view_note.text = notes[position].note
         holder.view.text_view_date.text = notes[position].date
         holder.view.text_view_cat.text = notes[position].cat
+        holder.view.text_view_stat.text = notes[position].stat
+        when(notes[position].cat){
+            "Personal"->{
+                holder.view.task_image.setImageResource(R.drawable.personal)
+            }
+            "Work"->{
+                holder.view.task_image.setImageResource(R.drawable.work)
+            }
+            "Shopping"->{
+                holder.view.task_image.setImageResource(R.drawable.market)
+            }
+            "Other"->{
+                holder.view.task_image.setImageResource(R.drawable.network)
+            }
+        }
         holder.view.setOnClickListener {
             val action = HomeFragmentDirections.actionAddNotes()
             action.note = notes[position]

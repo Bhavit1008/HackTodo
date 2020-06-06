@@ -6,11 +6,14 @@
     <string name="selected_item">Selected item:</string>
 
     <string-array name="Languages">
-        <item>personal</item>
-        <item>market</item>
-        <item>business</item>
-        <item>college</item>
-        <item>shopping</item>
-        <item>other</item>
+        <item>Personal</item>
+        <item>Work</item>
+        <item>Shopping</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="Status">
+        <item>On Going</item>
+        <item>Completed</item>
     </string-array>
 </resources>

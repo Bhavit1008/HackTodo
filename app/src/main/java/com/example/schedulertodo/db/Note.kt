@@ -9,7 +9,8 @@ data class Note(
     val title: String,
     val note: String,
     val date:String,
-    val cat:String
+    val cat:String,
+    val stat:String
 ):Serializable{
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
