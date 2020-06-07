@@ -52,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
                         editor.putString("email",email)
                         editor.putString("token",token)
                         editor.commit()
-
                         Log.d("token",token)
                         Toast.makeText(applicationContext,token,Toast.LENGTH_SHORT).show()
                         //Toast.makeText(applicationContext,response.body().toString(),Toast.LENGTH_SHORT).show()
