@@ -9,12 +9,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textFieldName"
-        android:layout_below="@+id/textFieldPhone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="160dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:textColorHint="@color/colorAccent"
@@ -105,7 +104,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
+        android:background="@drawable/round_button"
         android:id="@+id/btn_register"
+        android:textColor="#fff"
         android:layout_below="@+id/textFieldPassword"
         android:layout_centerHorizontal="true"/>
 
