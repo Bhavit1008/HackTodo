@@ -1,5 +1,6 @@
 # HackTodo(TaskHub)
-It is a simple ToDo list which can be used to manage tasks of users.</br></br>
+Built for HACKEREARTH Stack Hack 1.0</br>
+It is a simple ToDo list which can be used to manage tasks of users.</br>
 In this tasks are grouped into four categories:-
 * Personal
 * Work
